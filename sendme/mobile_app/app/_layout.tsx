@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { theme } from '../src/core/theme';
+import { AuthSessionProvider } from '../src/features/auth/auth-session-provider';
 
 export default function RootLayout() {
   const [queryClient] = useState(() => new QueryClient());
@@ -16,20 +17,22 @@ export default function RootLayout() {
   return (
     <SafeAreaProvider>
       <QueryClientProvider client={queryClient}>
-        <StatusBar style="dark" />
-        <Stack
-          screenOptions={{
-            headerShown: false,
-            contentStyle: { backgroundColor: theme.colors.background },
-          }}
-        >
-          <Stack.Screen name="index" />
-          <Stack.Screen name="(auth)" />
-          <Stack.Screen name="(customer)" />
-          <Stack.Screen name="(rider)" />
-          <Stack.Screen name="(admin)" />
-          <Stack.Screen name="+not-found" />
-        </Stack>
+        <AuthSessionProvider>
+          <StatusBar style="dark" />
+          <Stack
+            screenOptions={{
+              headerShown: false,
+              contentStyle: { backgroundColor: theme.colors.background },
+            }}
+          >
+            <Stack.Screen name="index" />
+            <Stack.Screen name="(auth)" />
+            <Stack.Screen name="(customer)" />
+            <Stack.Screen name="(rider)" />
+            <Stack.Screen name="(admin)" />
+            <Stack.Screen name="+not-found" />
+          </Stack>
+        </AuthSessionProvider>
       </QueryClientProvider>
     </SafeAreaProvider>
   );

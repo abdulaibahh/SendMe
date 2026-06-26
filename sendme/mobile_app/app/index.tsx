@@ -1,84 +1,66 @@
-import { Link } from 'expo-router';
+import { Link, Redirect } from 'expo-router';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { AppButton } from '../src/components/AppButton';
-import { MetricTile } from '../src/components/MetricTile';
+import { LoadingState } from '../src/components/LoadingState';
 import { ScreenContainer } from '../src/components/ScreenContainer';
 import { SurfaceCard } from '../src/components/SurfaceCard';
 import { env } from '../src/core/config/env';
 import { CURRENCY_CODE } from '../src/core/constants/currency';
 import { theme } from '../src/core/theme';
 import { textStyle } from '../src/core/theme/styles';
-
-const roles = [
-  {
-    label: 'Customer app',
-    href: '/(customer)/home',
-    description: 'Browse products, manage cart, checkout, and track orders.',
-  },
-  {
-    label: 'Rider app',
-    href: '/(rider)/dashboard',
-    description: 'View assigned deliveries and update order movement.',
-  },
-  {
-    label: 'Admin app',
-    href: '/(admin)/dashboard',
-    description: 'Manage products, orders, riders, customers, and reports.',
-  },
-] as const;
+import { getHomeForRole } from '../src/features/auth/role-routing';
+import { useAuthStore } from '../src/store/auth.store';
 
 export default function IndexScreen() {
   const missingConfig = env.missingConfig.join(', ');
+  const profile = useAuthStore((state) => state.profile);
+  const status = useAuthStore((state) => state.status);
+
+  if (status === 'idle' || status === 'loading') {
+    return <LoadingState message="Opening SendMe..." />;
+  }
+
+  if (status === 'authenticated' && profile) {
+    return <Redirect href={getHomeForRole(profile.role)} />;
+  }
 
   return (
     <ScreenContainer centered>
       <View style={styles.header}>
         <Text style={styles.brand}>SendMe</Text>
         <Text style={styles.tagline}>Fresh Market Delivery to Your Doorstep</Text>
-        <Text style={styles.context}>Built for market delivery operations in Sierra Leone.</Text>
+        <Text style={styles.context}>Fresh market food and groceries delivered in Sierra Leone.</Text>
       </View>
 
       <SurfaceCard>
-        <Text style={styles.cardTitle}>Phase 3 design system</Text>
+        <Text style={styles.cardTitle}>Welcome</Text>
         <Text style={styles.cardText}>
-          The mobile app now has shared typography, spacing, cards, controls, and status surfaces
-          ready for customer, rider, and admin workflows.
+          Sign in to browse market products, track orders, or open your assigned operations area.
         </Text>
 
-        <View style={styles.statusGrid}>
-          <MetricTile label="Currency" value={CURRENCY_CODE} />
-          <MetricTile
-            label="Backend"
-            value={env.isSupabaseConfigured ? 'Configured' : 'Pending'}
-            tone={env.isSupabaseConfigured ? 'green' : 'orange'}
-          />
+        <View style={styles.statusRow}>
+          <Text style={styles.statusText}>Currency: {CURRENCY_CODE}</Text>
+          <Text style={styles.statusText}>
+            Backend: {env.isSupabaseConfigured ? 'Configured' : 'Pending'}
+          </Text>
         </View>
 
         {!env.isSupabaseConfigured ? (
           <Text selectable style={styles.warning}>
-            Add {missingConfig || 'Supabase values'} to `.env` before testing backend features.
+            Add {missingConfig || 'Supabase values'} to `.env` before testing backend auth.
           </Text>
         ) : null}
       </SurfaceCard>
 
-      <View style={styles.roleList}>
-        {roles.map((role) => (
-          <SurfaceCard key={role.label} compact style={styles.roleCard}>
-            <View style={styles.roleCopy}>
-              <Text style={styles.roleTitle}>{role.label}</Text>
-              <Text style={styles.roleDescription}>{role.description}</Text>
-            </View>
-            <Link href={role.href} asChild>
-              <AppButton label="Open" variant="secondary" />
-            </Link>
-          </SurfaceCard>
-        ))}
+      <View style={styles.actions}>
+        <Link href="/login" asChild>
+          <AppButton label="Sign in" />
+        </Link>
+        <Link href="/register" asChild>
+          <AppButton label="Create customer account" variant="secondary" />
+        </Link>
       </View>
-
-      <Link href="/login" asChild>
-        <AppButton label="Sign in or create account" />
-      </Link>
     </ScreenContainer>
   );
 }
@@ -102,31 +84,18 @@ const styles = StyleSheet.create({
   cardText: {
     ...textStyle('body', theme.colors.textMuted),
   },
-  statusGrid: {
+  statusRow: {
     flexDirection: 'row',
-    gap: theme.spacing.sm,
     flexWrap: 'wrap',
+    gap: theme.spacing.md,
+  },
+  statusText: {
+    ...textStyle('caption', theme.colors.textMuted),
   },
   warning: {
     ...textStyle('caption', theme.colors.orange),
   },
-  roleList: {
+  actions: {
     gap: theme.spacing.sm,
-  },
-  roleCard: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    gap: theme.spacing.sm,
-  },
-  roleCopy: {
-    flex: 1,
-    gap: theme.spacing.xs,
-  },
-  roleTitle: {
-    ...textStyle('bodyStrong'),
-  },
-  roleDescription: {
-    ...textStyle('caption', theme.colors.textMuted),
   },
 });

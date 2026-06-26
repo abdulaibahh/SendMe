@@ -1,6 +1,10 @@
-import { FeatureRouteScreen } from '../../src/features/shared/feature-route-screen';
-import { routeContent } from '../../src/features/shared/route-content';
+import { ProfileSummaryScreen } from '../../src/features/auth/profile-summary-screen';
 
 export default function SettingsScreen() {
-  return <FeatureRouteScreen {...routeContent.adminSettings} />;
+  return (
+    <ProfileSummaryScreen
+      title="Admin settings"
+      subtitle="View the current admin account and sign out securely."
+    />
+  );
 }

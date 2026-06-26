@@ -1,6 +1,10 @@
-import { FeatureRouteScreen } from '../../src/features/shared/feature-route-screen';
-import { routeContent } from '../../src/features/shared/route-content';
+import { ProfileSummaryScreen } from '../../src/features/auth/profile-summary-screen';
 
 export default function RiderProfileScreen() {
-  return <FeatureRouteScreen {...routeContent.riderProfile} />;
+  return (
+    <ProfileSummaryScreen
+      title="Rider profile"
+      subtitle="View the SendMe account used for assigned deliveries."
+    />
+  );
 }

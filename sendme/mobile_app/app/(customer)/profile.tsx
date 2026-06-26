@@ -1,6 +1,10 @@
-import { FeatureRouteScreen } from '../../src/features/shared/feature-route-screen';
-import { routeContent } from '../../src/features/shared/route-content';
+import { ProfileSummaryScreen } from '../../src/features/auth/profile-summary-screen';
 
 export default function CustomerProfileScreen() {
-  return <FeatureRouteScreen {...routeContent.customerProfile} />;
+  return (
+    <ProfileSummaryScreen
+      title="Customer profile"
+      subtitle="Manage the SendMe account used for shopping and delivery updates."
+    />
+  );
 }
