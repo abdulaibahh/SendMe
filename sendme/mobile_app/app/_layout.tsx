@@ -3,7 +3,7 @@ import 'react-native-get-random-values';
 import 'react-native-url-polyfill/auto';
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { Stack } from 'expo-router';
+import Stack from 'expo-router/stack';
 import { StatusBar } from 'expo-status-bar';
 import { useState } from 'react';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
@@ -22,7 +22,14 @@ export default function RootLayout() {
             headerShown: false,
             contentStyle: { backgroundColor: theme.colors.background },
           }}
-        />
+        >
+          <Stack.Screen name="index" />
+          <Stack.Screen name="(auth)" />
+          <Stack.Screen name="(customer)" />
+          <Stack.Screen name="(rider)" />
+          <Stack.Screen name="(admin)" />
+          <Stack.Screen name="+not-found" />
+        </Stack>
       </QueryClientProvider>
     </SafeAreaProvider>
   );

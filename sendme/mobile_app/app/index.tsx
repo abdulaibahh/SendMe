@@ -1,3 +1,4 @@
+import { Link } from 'expo-router';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import { AppButton } from '../src/components/AppButton';
@@ -5,19 +6,29 @@ import { env } from '../src/core/config/env';
 import { CURRENCY_CODE } from '../src/core/constants/currency';
 import { theme } from '../src/core/theme';
 
-const phaseItems = [
-  'Expo Router app shell',
-  'TypeScript strict mode',
-  'Secure env examples',
-  'Android package com.sendme.sl',
-  'Supabase and Firebase config placeholders',
-];
+const roles = [
+  {
+    label: 'Customer app',
+    href: '/(customer)/home',
+    description: 'Browse products, manage cart, checkout, and track orders.',
+  },
+  {
+    label: 'Rider app',
+    href: '/(rider)/dashboard',
+    description: 'View assigned deliveries and update order movement.',
+  },
+  {
+    label: 'Admin app',
+    href: '/(admin)/dashboard',
+    description: 'Manage products, orders, riders, customers, and reports.',
+  },
+] as const;
 
-export default function WelcomeScreen() {
+export default function IndexScreen() {
   const missingConfig = env.missingConfig.join(', ');
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
+    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.container}>
       <View style={styles.header}>
         <Text style={styles.brand}>SendMe</Text>
         <Text style={styles.tagline}>Fresh Market Delivery to Your Doorstep</Text>
@@ -45,22 +56,29 @@ export default function WelcomeScreen() {
         </View>
 
         {!env.isSupabaseConfigured ? (
-          <Text style={styles.warning}>
+          <Text selectable style={styles.warning}>
             Add {missingConfig || 'Supabase values'} to `.env` before testing backend features.
           </Text>
         ) : null}
       </View>
 
-      <View style={styles.checklist}>
-        {phaseItems.map((item) => (
-          <View key={item} style={styles.checklistRow}>
-            <View style={styles.dot} />
-            <Text style={styles.checklistText}>{item}</Text>
+      <View style={styles.roleList}>
+        {roles.map((role) => (
+          <View key={role.label} style={styles.roleCard}>
+            <View style={styles.roleCopy}>
+              <Text style={styles.roleTitle}>{role.label}</Text>
+              <Text style={styles.roleDescription}>{role.description}</Text>
+            </View>
+            <Link href={role.href} asChild>
+              <AppButton label="Open" variant="secondary" />
+            </Link>
           </View>
         ))}
       </View>
 
-      <AppButton label="Continue Setup" onPress={() => undefined} />
+      <Link href="/login" asChild>
+        <AppButton label="Sign in or create account" />
+      </Link>
     </ScrollView>
   );
 }
@@ -137,23 +155,33 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 20,
   },
-  checklist: {
+  roleList: {
     gap: theme.spacing.sm,
     marginVertical: theme.spacing.xl,
   },
-  checklistRow: {
+  roleCard: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
     gap: theme.spacing.sm,
+    padding: theme.spacing.md,
+    borderWidth: 1,
+    borderColor: theme.colors.border,
+    borderRadius: theme.radius.lg,
+    backgroundColor: theme.colors.white,
   },
-  dot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-    backgroundColor: theme.colors.success,
+  roleCopy: {
+    flex: 1,
+    gap: theme.spacing.xs,
   },
-  checklistText: {
+  roleTitle: {
     color: theme.colors.textDark,
-    fontSize: 15,
+    fontSize: 16,
+    fontWeight: '800',
+  },
+  roleDescription: {
+    color: theme.colors.textMuted,
+    fontSize: 13,
+    lineHeight: 18,
   },
 });
