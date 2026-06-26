@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { theme } from '../core/theme';
+import { textStyle } from '../core/theme/styles';
 import type { TimelineStep } from '../core/types/domain';
 
 type OrderStatusTimelineProps = {
@@ -48,13 +49,9 @@ const styles = StyleSheet.create({
     gap: theme.spacing.xs,
   },
   label: {
-    color: theme.colors.textDark,
-    fontSize: 15,
-    fontWeight: '800',
+    ...textStyle('bodyStrong'),
   },
   description: {
-    color: theme.colors.textMuted,
-    fontSize: 13,
-    lineHeight: 18,
+    ...textStyle('caption', theme.colors.textMuted),
   },
 });

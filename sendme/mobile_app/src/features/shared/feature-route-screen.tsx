@@ -1,7 +1,10 @@
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
+import { ScreenContainer } from '../../components/ScreenContainer';
 import { StatusBadge } from '../../components/StatusBadge';
+import { SurfaceCard } from '../../components/SurfaceCard';
 import { theme } from '../../core/theme';
+import { textStyle } from '../../core/theme/styles';
 
 export type FeatureRouteSection = {
   title: string;
@@ -24,7 +27,7 @@ export function FeatureRouteScreen({
   sections,
 }: FeatureRouteScreenProps) {
   return (
-    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.container}>
+    <ScreenContainer>
       <View style={styles.header}>
         <View style={styles.eyebrowRow}>
           <Text selectable style={styles.eyebrow}>
@@ -39,7 +42,7 @@ export function FeatureRouteScreen({
       </View>
 
       {sections.map((section) => (
-        <View key={section.title} style={styles.card}>
+        <SurfaceCard key={section.title}>
           <Text style={styles.sectionTitle}>{section.title}</Text>
           <View style={styles.list}>
             {section.items.map((item) => (
@@ -51,18 +54,13 @@ export function FeatureRouteScreen({
               </View>
             ))}
           </View>
-        </View>
+        </SurfaceCard>
       ))}
-    </ScrollView>
+    </ScreenContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: theme.spacing.lg,
-    padding: theme.spacing.xl,
-    backgroundColor: theme.colors.background,
-  },
   header: {
     gap: theme.spacing.sm,
   },
@@ -73,34 +71,17 @@ const styles = StyleSheet.create({
     gap: theme.spacing.md,
   },
   eyebrow: {
-    color: theme.colors.deepGreen,
-    fontSize: 13,
-    fontWeight: '800',
+    ...textStyle('label', theme.colors.deepGreen),
     textTransform: 'uppercase',
   },
   title: {
-    color: theme.colors.textDark,
-    fontSize: 28,
-    fontWeight: '900',
-    lineHeight: 34,
+    ...textStyle('title'),
   },
   description: {
-    color: theme.colors.textMuted,
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  card: {
-    gap: theme.spacing.md,
-    padding: theme.spacing.lg,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.white,
+    ...textStyle('body', theme.colors.textMuted),
   },
   sectionTitle: {
-    color: theme.colors.textDark,
-    fontSize: 17,
-    fontWeight: '800',
+    ...textStyle('bodyStrong'),
   },
   list: {
     gap: theme.spacing.sm,
@@ -119,8 +100,6 @@ const styles = StyleSheet.create({
   },
   itemText: {
     flex: 1,
-    color: theme.colors.textMuted,
-    fontSize: 15,
-    lineHeight: 22,
+    ...textStyle('caption', theme.colors.textMuted),
   },
 });

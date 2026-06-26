@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { theme } from '../core/theme';
+import { cardStyle, textStyle } from '../core/theme/styles';
 import type { Address } from '../core/types/domain';
 
 type AddressCardProps = {
@@ -24,25 +25,16 @@ export function AddressCard({ address }: AddressCardProps) {
 
 const styles = StyleSheet.create({
   card: {
+    ...cardStyle,
     gap: theme.spacing.xs,
-    padding: theme.spacing.md,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.white,
   },
   label: {
-    color: theme.colors.textDark,
-    fontSize: 16,
-    fontWeight: '900',
+    ...textStyle('bodyStrong'),
   },
   line: {
-    color: theme.colors.textMuted,
-    fontSize: 14,
+    ...textStyle('caption', theme.colors.textMuted),
   },
   area: {
-    color: theme.colors.deepGreen,
-    fontSize: 14,
-    fontWeight: '800',
+    ...textStyle('caption', theme.colors.deepGreen),
   },
 });

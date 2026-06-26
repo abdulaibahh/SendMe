@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { theme } from '../core/theme';
+import { textStyle } from '../core/theme/styles';
 
 type EmptyStateProps = {
   title: string;
@@ -25,15 +26,11 @@ const styles = StyleSheet.create({
     padding: theme.spacing.xl,
   },
   title: {
-    color: theme.colors.textDark,
-    fontSize: 18,
-    fontWeight: '900',
+    ...textStyle('subtitle'),
     textAlign: 'center',
   },
   message: {
-    color: theme.colors.textMuted,
-    fontSize: 15,
-    lineHeight: 22,
+    ...textStyle('body', theme.colors.textMuted),
     textAlign: 'center',
   },
 });

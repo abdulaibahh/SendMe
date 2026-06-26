@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { theme } from '../core/theme';
+import { textStyle } from '../core/theme/styles';
 import type { PaymentMethod } from '../core/types/domain';
 
 const paymentLabels: Record<PaymentMethod, string> = {
@@ -52,7 +53,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: theme.colors.border,
     borderRadius: theme.radius.md,
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.surface,
   },
   selected: {
     borderColor: theme.colors.deepGreen,
@@ -70,9 +71,7 @@ const styles = StyleSheet.create({
     borderColor: theme.colors.deepGreen,
   },
   label: {
-    color: theme.colors.textDark,
-    fontSize: 15,
-    fontWeight: '700',
+    ...textStyle('bodyStrong'),
   },
   labelSelected: {
     color: theme.colors.darkGreen,

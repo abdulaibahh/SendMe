@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 import { theme } from '../core/theme';
+import { cardStyle, textStyle } from '../core/theme/styles';
 import { AppButton } from './AppButton';
 
 type ErrorStateProps = {
@@ -23,21 +24,15 @@ export function ErrorState({ title = 'Something went wrong', message, onRetry }:
 
 const styles = StyleSheet.create({
   container: {
+    ...cardStyle,
     gap: theme.spacing.md,
-    padding: theme.spacing.xl,
-    borderWidth: 1,
-    borderColor: '#FECACA',
-    borderRadius: theme.radius.lg,
-    backgroundColor: '#FEF2F2',
+    borderColor: theme.colors.errorSoft,
+    backgroundColor: theme.colors.errorSoft,
   },
   title: {
-    color: theme.colors.error,
-    fontSize: 18,
-    fontWeight: '900',
+    ...textStyle('subtitle', theme.colors.error),
   },
   message: {
-    color: theme.colors.textMuted,
-    fontSize: 15,
-    lineHeight: 22,
+    ...textStyle('body', theme.colors.textMuted),
   },
 });

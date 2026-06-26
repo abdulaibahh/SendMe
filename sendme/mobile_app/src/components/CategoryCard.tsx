@@ -1,6 +1,7 @@
 import { Pressable, StyleSheet, Text } from 'react-native';
 
 import { theme } from '../core/theme';
+import { compactCardStyle, textStyle } from '../core/theme/styles';
 import type { Category } from '../core/types/domain';
 
 type CategoryCardProps = {
@@ -21,23 +22,15 @@ export function CategoryCard({ category, onPress }: CategoryCardProps) {
 
 const styles = StyleSheet.create({
   card: {
+    ...compactCardStyle,
     minHeight: 96,
     justifyContent: 'space-between',
     gap: theme.spacing.sm,
-    padding: theme.spacing.md,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.white,
   },
   name: {
-    color: theme.colors.deepGreen,
-    fontSize: 16,
-    fontWeight: '900',
+    ...textStyle('bodyStrong', theme.colors.deepGreen),
   },
   description: {
-    color: theme.colors.textMuted,
-    fontSize: 13,
-    lineHeight: 18,
+    ...textStyle('caption', theme.colors.textMuted),
   },
 });

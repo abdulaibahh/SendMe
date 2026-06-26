@@ -1,6 +1,7 @@
 import { ActivityIndicator, StyleSheet, Text, View } from 'react-native';
 
 import { theme } from '../core/theme';
+import { textStyle } from '../core/theme/styles';
 
 type LoadingStateProps = {
   message?: string;
@@ -25,7 +26,6 @@ const styles = StyleSheet.create({
     backgroundColor: theme.colors.background,
   },
   message: {
-    color: theme.colors.textMuted,
-    fontSize: 16,
+    ...textStyle('body', theme.colors.textMuted),
   },
 });

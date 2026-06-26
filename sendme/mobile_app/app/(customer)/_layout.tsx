@@ -1,8 +1,10 @@
 import Stack from 'expo-router/stack';
 
+import { sendMeStackScreenOptions } from '../../src/core/theme/navigation';
+
 export default function CustomerLayout() {
   return (
-    <Stack>
+    <Stack screenOptions={sendMeStackScreenOptions}>
       <Stack.Screen name="home" options={{ title: 'Home' }} />
       <Stack.Screen name="products" options={{ title: 'Products' }} />
       <Stack.Screen name="product-details" options={{ title: 'Product details' }} />

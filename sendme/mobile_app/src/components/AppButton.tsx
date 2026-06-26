@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import { theme } from '../core/theme';
+import { textStyle } from '../core/theme/styles';
 
 type AppButtonProps = PressableProps & {
   label: string;
@@ -53,13 +54,13 @@ export function AppButton({
 
 const styles = StyleSheet.create({
   button: {
-    minHeight: 54,
+    minHeight: theme.layout.controlHeight,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
     gap: theme.spacing.sm,
     paddingHorizontal: theme.spacing.lg,
-    borderRadius: theme.radius.lg,
+    borderRadius: theme.radius.md,
   },
   primary: {
     backgroundColor: theme.colors.deepGreen,
@@ -76,9 +77,7 @@ const styles = StyleSheet.create({
     opacity: 0.6,
   },
   label: {
-    color: theme.colors.white,
-    fontSize: 16,
-    fontWeight: '800',
+    ...textStyle('bodyStrong', theme.colors.white),
   },
   secondaryLabel: {
     color: theme.colors.deepGreen,

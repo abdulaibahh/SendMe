@@ -1,6 +1,7 @@
 import { StyleSheet, Text } from 'react-native';
 
 import { theme } from '../core/theme';
+import { textStyle } from '../core/theme/styles';
 
 type StatusBadgeProps = {
   label: string;
@@ -17,23 +18,22 @@ const styles = StyleSheet.create({
     paddingHorizontal: theme.spacing.sm,
     paddingVertical: theme.spacing.xs,
     borderRadius: theme.radius.sm,
-    fontSize: 12,
-    fontWeight: '900',
+    ...textStyle('label'),
   },
   success: {
-    backgroundColor: theme.colors.lightGreen,
+    backgroundColor: theme.colors.successSoft,
     color: theme.colors.success,
   },
   warning: {
-    backgroundColor: '#FFF4E8',
+    backgroundColor: theme.colors.orangeSoft,
     color: theme.colors.orange,
   },
   error: {
-    backgroundColor: '#FEE2E2',
+    backgroundColor: theme.colors.errorSoft,
     color: theme.colors.error,
   },
   info: {
-    backgroundColor: theme.colors.lightGreen,
-    color: theme.colors.deepGreen,
+    backgroundColor: theme.colors.infoSoft,
+    color: theme.colors.info,
   },
 });

@@ -2,6 +2,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { formatCurrency } from '../core/constants/currency';
 import { theme } from '../core/theme';
+import { textStyle } from '../core/theme/styles';
 import type { CartLine } from '../core/types/domain';
 
 type CartItemRowProps = {
@@ -35,17 +36,13 @@ const styles = StyleSheet.create({
     gap: theme.spacing.xs,
   },
   name: {
-    color: theme.colors.textDark,
-    fontSize: 15,
-    fontWeight: '800',
+    ...textStyle('bodyStrong'),
   },
   meta: {
-    color: theme.colors.textMuted,
-    fontSize: 13,
+    ...textStyle('caption', theme.colors.textMuted),
   },
   total: {
-    color: theme.colors.textDark,
-    fontSize: 15,
-    fontWeight: '900',
+    ...textStyle('bodyStrong'),
+    fontVariant: ['tabular-nums'],
   },
 });

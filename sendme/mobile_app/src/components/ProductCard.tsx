@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 import { formatCurrency } from '../core/constants/currency';
 import { theme } from '../core/theme';
+import { cardStyle, textStyle } from '../core/theme/styles';
 import type { Product } from '../core/types/domain';
 import { StatusBadge } from './StatusBadge';
 
@@ -34,26 +35,20 @@ export function ProductCard({ product, onPress }: ProductCardProps) {
 
 const styles = StyleSheet.create({
   card: {
+    ...cardStyle,
     flexDirection: 'row',
     gap: theme.spacing.md,
-    padding: theme.spacing.md,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.white,
   },
   mediaPlaceholder: {
-    width: 64,
-    height: 64,
+    width: theme.layout.iconTile,
+    height: theme.layout.iconTile,
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: theme.radius.md,
     backgroundColor: theme.colors.lightGreen,
   },
   mediaText: {
-    color: theme.colors.deepGreen,
-    fontSize: 24,
-    fontWeight: '900',
+    ...textStyle('title', theme.colors.deepGreen),
   },
   copy: {
     flex: 1,
@@ -67,18 +62,12 @@ const styles = StyleSheet.create({
   },
   name: {
     flex: 1,
-    color: theme.colors.textDark,
-    fontSize: 16,
-    fontWeight: '800',
+    ...textStyle('bodyStrong'),
   },
   description: {
-    color: theme.colors.textMuted,
-    fontSize: 13,
-    lineHeight: 18,
+    ...textStyle('caption', theme.colors.textMuted),
   },
   price: {
-    color: theme.colors.orange,
-    fontSize: 15,
-    fontWeight: '900',
+    ...textStyle('bodyStrong', theme.colors.orange),
   },
 });

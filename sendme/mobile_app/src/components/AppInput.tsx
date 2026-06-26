@@ -1,6 +1,7 @@
 import { StyleSheet, Text, TextInput, type TextInputProps, View } from 'react-native';
 
 import { theme } from '../core/theme';
+import { textStyle } from '../core/theme/styles';
 
 type AppInputProps = TextInputProps & {
   label: string;
@@ -30,25 +31,22 @@ const styles = StyleSheet.create({
     gap: theme.spacing.xs,
   },
   label: {
-    color: theme.colors.textDark,
-    fontSize: 14,
-    fontWeight: '700',
+    ...textStyle('caption', theme.colors.textDark),
   },
   input: {
-    minHeight: 52,
+    minHeight: theme.layout.controlHeight,
     paddingHorizontal: theme.spacing.md,
     borderWidth: 1,
     borderColor: theme.colors.border,
     borderRadius: theme.radius.md,
-    backgroundColor: theme.colors.white,
+    backgroundColor: theme.colors.surface,
     color: theme.colors.textDark,
-    fontSize: 16,
+    ...textStyle('body'),
   },
   inputError: {
     borderColor: theme.colors.error,
   },
   error: {
-    color: theme.colors.error,
-    fontSize: 13,
+    ...textStyle('caption', theme.colors.error),
   },
 });

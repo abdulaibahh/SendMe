@@ -1,10 +1,14 @@
 import { Link } from 'expo-router';
-import { ScrollView, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { AppButton } from '../src/components/AppButton';
+import { MetricTile } from '../src/components/MetricTile';
+import { ScreenContainer } from '../src/components/ScreenContainer';
+import { SurfaceCard } from '../src/components/SurfaceCard';
 import { env } from '../src/core/config/env';
 import { CURRENCY_CODE } from '../src/core/constants/currency';
 import { theme } from '../src/core/theme';
+import { textStyle } from '../src/core/theme/styles';
 
 const roles = [
   {
@@ -28,31 +32,27 @@ export default function IndexScreen() {
   const missingConfig = env.missingConfig.join(', ');
 
   return (
-    <ScrollView contentInsetAdjustmentBehavior="automatic" contentContainerStyle={styles.container}>
+    <ScreenContainer centered>
       <View style={styles.header}>
         <Text style={styles.brand}>SendMe</Text>
         <Text style={styles.tagline}>Fresh Market Delivery to Your Doorstep</Text>
         <Text style={styles.context}>Built for market delivery operations in Sierra Leone.</Text>
       </View>
 
-      <View style={styles.card}>
-        <Text style={styles.cardTitle}>Phase 1 foundation</Text>
+      <SurfaceCard>
+        <Text style={styles.cardTitle}>Phase 3 design system</Text>
         <Text style={styles.cardText}>
-          The app shell is ready for the customer, rider, and admin workflows that will connect to
-          Supabase and Firebase in the next phases.
+          The mobile app now has shared typography, spacing, cards, controls, and status surfaces
+          ready for customer, rider, and admin workflows.
         </Text>
 
         <View style={styles.statusGrid}>
-          <View style={styles.statusPill}>
-            <Text style={styles.statusLabel}>Currency</Text>
-            <Text style={styles.statusValue}>{CURRENCY_CODE}</Text>
-          </View>
-          <View style={styles.statusPill}>
-            <Text style={styles.statusLabel}>Backend</Text>
-            <Text style={styles.statusValue}>
-              {env.isSupabaseConfigured ? 'Configured' : 'Pending'}
-            </Text>
-          </View>
+          <MetricTile label="Currency" value={CURRENCY_CODE} />
+          <MetricTile
+            label="Backend"
+            value={env.isSupabaseConfigured ? 'Configured' : 'Pending'}
+            tone={env.isSupabaseConfigured ? 'green' : 'orange'}
+          />
         </View>
 
         {!env.isSupabaseConfigured ? (
@@ -60,11 +60,11 @@ export default function IndexScreen() {
             Add {missingConfig || 'Supabase values'} to `.env` before testing backend features.
           </Text>
         ) : null}
-      </View>
+      </SurfaceCard>
 
       <View style={styles.roleList}>
         {roles.map((role) => (
-          <View key={role.label} style={styles.roleCard}>
+          <SurfaceCard key={role.label} compact style={styles.roleCard}>
             <View style={styles.roleCopy}>
               <Text style={styles.roleTitle}>{role.label}</Text>
               <Text style={styles.roleDescription}>{role.description}</Text>
@@ -72,116 +72,61 @@ export default function IndexScreen() {
             <Link href={role.href} asChild>
               <AppButton label="Open" variant="secondary" />
             </Link>
-          </View>
+          </SurfaceCard>
         ))}
       </View>
 
       <Link href="/login" asChild>
         <AppButton label="Sign in or create account" />
       </Link>
-    </ScrollView>
+    </ScreenContainer>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    padding: theme.spacing.xl,
-    backgroundColor: theme.colors.background,
-  },
   header: {
     gap: theme.spacing.sm,
-    marginBottom: theme.spacing.xl,
   },
   brand: {
-    color: theme.colors.deepGreen,
-    fontSize: 42,
-    fontWeight: '800',
+    ...textStyle('hero', theme.colors.deepGreen),
   },
   tagline: {
-    color: theme.colors.textDark,
-    fontSize: 22,
-    fontWeight: '700',
-    lineHeight: 30,
+    ...textStyle('subtitle'),
   },
   context: {
-    color: theme.colors.textMuted,
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  card: {
-    gap: theme.spacing.md,
-    padding: theme.spacing.lg,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.white,
+    ...textStyle('body', theme.colors.textMuted),
   },
   cardTitle: {
-    color: theme.colors.textDark,
-    fontSize: 20,
-    fontWeight: '700',
+    ...textStyle('subtitle'),
   },
   cardText: {
-    color: theme.colors.textMuted,
-    fontSize: 15,
-    lineHeight: 22,
+    ...textStyle('body', theme.colors.textMuted),
   },
   statusGrid: {
     flexDirection: 'row',
     gap: theme.spacing.sm,
-  },
-  statusPill: {
-    flex: 1,
-    gap: theme.spacing.xs,
-    padding: theme.spacing.md,
-    borderRadius: theme.radius.md,
-    backgroundColor: theme.colors.lightGreen,
-  },
-  statusLabel: {
-    color: theme.colors.textMuted,
-    fontSize: 12,
-    fontWeight: '700',
-    textTransform: 'uppercase',
-  },
-  statusValue: {
-    color: theme.colors.darkGreen,
-    fontSize: 16,
-    fontWeight: '800',
+    flexWrap: 'wrap',
   },
   warning: {
-    color: theme.colors.orange,
-    fontSize: 14,
-    lineHeight: 20,
+    ...textStyle('caption', theme.colors.orange),
   },
   roleList: {
     gap: theme.spacing.sm,
-    marginVertical: theme.spacing.xl,
   },
   roleCard: {
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
     gap: theme.spacing.sm,
-    padding: theme.spacing.md,
-    borderWidth: 1,
-    borderColor: theme.colors.border,
-    borderRadius: theme.radius.lg,
-    backgroundColor: theme.colors.white,
   },
   roleCopy: {
     flex: 1,
     gap: theme.spacing.xs,
   },
   roleTitle: {
-    color: theme.colors.textDark,
-    fontSize: 16,
-    fontWeight: '800',
+    ...textStyle('bodyStrong'),
   },
   roleDescription: {
-    color: theme.colors.textMuted,
-    fontSize: 13,
-    lineHeight: 18,
+    ...textStyle('caption', theme.colors.textMuted),
   },
 });
